@@ -1,0 +1,20 @@
+.van-nav-bar {
+  height: 46px;
+  color: #fff;
+  background-color: #000;
+}
+.van-nav-bar .van-icon,
+.van-nav-bar__text {
+  color: #fff;
+}
+.van-button {
+  color: #fff;
+  border: 1px solid #169bd5;
+  background-color: #169bd5;
+}
+
+.van-button--disabled {
+  color: #999;
+  background-color: #e5e5e5;
+  border: 1px solid #ccc;
+}

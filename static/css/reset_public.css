@@ -1,0 +1,290 @@
+@charset "utf-8";
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
+th, td {
+  /* table elements 表格元素 */
+  margin: 0;
+  padding: 0;
+}
+
+/* 设置默认字体 */
+body,
+button,
+input,
+select,
+textarea {
+  /* for ie */
+  /*font: 12px/1 tahoma, helvetica, arial, "宋体", sans-serif;*/
+  font: 12px/1 tahoma, helvetica, arial, "\5b8b\4f53", sans-serif; /* 用 ascii 字符表示，使得在任何编码下都无问题 */
+}
+
+h1 {
+  font-size: 18px; /* 18px / 12px = 1.5 */
+}
+h2 {
+  font-size: 16px;
+}
+h3 {
+  font-size: 14px;
+}
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+} /* 将斜体扶正 */
+code,
+kbd,
+pre,
+samp,
+tt {
+  font-family: "PingFang", "courier new", courier, monospace;
+} /* 统一等宽字体 */
+small {
+  font-size: 12px;
+} /* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+/* 重置列表元素 */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 重置文本格式元素 */
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+abbr[title],
+acronym[title] {
+  /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+q:before,
+q:after {
+  content: "";
+}
+
+/* 重置表单元素 */
+legend {
+  color: #000;
+} /* for ie6 */
+fieldset,
+img {
+  border: none;
+} /* img 搭车：让链接里的 img 无边框 */
+/* 注：optgroup 无法扶正 */
+button,
+input,
+select,
+textarea {
+  font-size: 100%; /* 使得表单元素在 ie 下能继承字体大小 */
+}
+/* 重置表格元素 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 重置 hr */
+hr {
+  border: none;
+  height: 1px;
+}
+
+/* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+  overflow: hidden;
+}
+.clearfix {
+  *zoom: 1;
+}
+body,
+input {
+  font-family: Arial, Helvetica, sans-serif, "Microsoft YaHei", "宋体";
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #c6c4c4;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #c6c4c4;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #c6c4c4;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #c6c4c4;
+}
+input,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+img {
+  display: block;
+}
+fieldset {
+  display: block;
+  -webkit-margin-start: 2px;
+  -webkit-margin-end: 2px;
+  -webkit-padding-before: 0.35em;
+  -webkit-padding-start: 0.75em;
+  -webkit-padding-end: 0.75em;
+  -webkit-padding-after: 0.625em;
+  border: 2px solid #7c90a3;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
+  min-width: -webkit-min-content;
+  +padding: 5px;
+  _padding: 5px;
+  padding: 5px\0;
+}
+legend {
+  font-size: 12px;
+  color: #7c90a3;
+  display: block;
+  -webkit-padding-start: 2px;
+  -webkit-padding-end: 2px;
+  border: none;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
+}
+
+/*public css style*/
+
+/*页面按钮样式，注意命名方式会跟bootstrap冲突*/
+[type="reset"],
+[type="submit"],
+button,
+html [type="button"] {
+  -webkit-appearance: button;
+}
+html {
+  /*font-size: 12px;*/
+}
+body {
+  /* background-color: #f3f5f5; */
+}
+.header {
+  position: relative;
+  width: 100%;
+  line-height: 0.9rem;
+  font-size: 0.4rem;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+}
+.header a {
+  position: absolute;
+  left: 0.46rem;
+  font-size: 0.3rem;
+  color: #32a9ff;
+}
+.header h3 {
+  font-size: 0.3rem;
+}
+.item_input {
+  clear: both;
+  position: relative;
+  height: 0.8rem;
+  font-size: 0.3rem;
+  color: #333;
+  background-color: #ffffff;
+  border-bottom: solid 1px #e0e5e5;
+}
+.item_input label {
+  float: left;
+  width: 1.5rem;
+  font-size: 0.28rem;
+  line-height: 0.81rem;
+  padding-left: 0.5rem;
+  color: #999;
+}
+.item_input input {
+  float: left;
+  border: none;
+  background: none;
+  outline: none;
+  -webkit-appearance: none;
+  width: 66%;
+  height: 0.8rem;
+  line-height: 0.4rem;
+  font-size: 0.28rem;
+  /*line-height: 0.8rem;*/
+}
+.input_arrow {
+  background-image: url(/openweb/images/arrow.png);
+  background-repeat: no-repeat;
+  background-position: 96% center;
+  background-size: 0.2rem;
+}
+.border_none {
+  border: none;
+}
+.border_dashed {
+  border-bottom: dashed 1px #e0e5e5;
+}
+.input_title {
+  clear: both;
+  width: 100%;
+  line-height: 0.8rem;
+  font-size: 0.28rem;
+  color: #666;
+  font-weight: bold;
+  text-indent: 0.46rem;
+}
+.sub_btn {
+  /*display: none;*/
+  border: none;
+  outline: none;
+  background: none;
+  -webkit-appearance: none;
+  margin: 0.5rem 5%;
+  width: 90%;
+  height: 0.93rem;
+  line-height: 0.93rem;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background-color: #32a9ff;
+  color: #ffffff;
+  font-size: 0.37rem;
+  text-align: center;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.hide {
+  display: none;
+}
