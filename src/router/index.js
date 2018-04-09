@@ -6,7 +6,9 @@ import home from "@/components/Home";
 import finish from "@/components/Finish";
 import details from "@/components/Details";
 import activate from "@/components/Activate";
+import succee from "@/components/Succee";
 import notactivate from "@/components/NotActivate";
+import NotFound from "@/components/NotFound";
 
 Vue.use(Router);
 
@@ -46,9 +48,15 @@ export default new Router({
       component: details
     },
     {
+      path: "/succee",
+      name: "succee",
+      component: succee
+    },
+    {
       path: "/notactivate",
       name: "notactivate",
       component: notactivate
-    }
+    },
+    { path: "*", component: NotFound }
   ]
 });

@@ -72,13 +72,14 @@ export default {
 </script>
 <style scoped>
 #details {
-  padding-bottom: 30px;
+  padding-bottom: 0.6rem;
 }
 .center {
-  padding: 0 15px;
+  /* padding: 0 15px; */
+  font-size: 0.24rem;
 }
 .center .van-panel__header {
-  padding: 10px 0 !important;
+  padding: 0.2rem 0 !important;
 }
 .van-hairline--bottom::after {
   border-bottom-width: 0;
@@ -87,10 +88,10 @@ export default {
   border-width: 0 0;
 }
 .det-text {
-  margin: 10px 0;
-  padding: 0 15px;
-  text-indent: 20px;
-  line-height: 18px;
+  margin: 0.2rem 0;
+  padding: 0 0.3rem;
+  text-indent: 0.4rem;
+  line-height: 0.36rem;
 }
 
 /* .van-button {

@@ -5,7 +5,7 @@ import router from "../router/index";
 
 //axios 配置
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = "https://www.baidu.com";
+// axios.defaults.baseURL = "https://www.baidu.com";
 // 添加请求拦截器
 axios.interceptors.request.use(
   function(config) {

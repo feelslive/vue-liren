@@ -10,7 +10,6 @@
           />
         </div>
         <div class="centent">
-         
           <van-icon name="info-o" />
            <h2>您还未激活绑定诊疗项目产品，请先激活后再预约</h2>
            <router-link to="./activate" class="actbtnto"> 

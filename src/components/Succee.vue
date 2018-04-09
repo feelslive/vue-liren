@@ -10,9 +10,7 @@
           />
         </div>
          <van-icon name="passed" />
-        <router-link to="./make" class="actbtnto"> 
-            <van-button>去预约</van-button>
-          </router-link>
+        <van-button @click="to_activate">去预约</van-button>
     </div>
 </template>
 <script>
@@ -22,7 +20,20 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.back(-1);
+      this.$router.push({
+        path: "/"
+      });
+    },
+    to_activate() {
+      if (this.$store.state.isLogin == "100") {
+        this.$router.push({
+          path: "/make"
+        });
+      } else {
+        this.$router.push({
+          path: "/login"
+        });
+      }
     }
   }
 };

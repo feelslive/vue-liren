@@ -35,11 +35,11 @@ export default {
 </script>
 <style scoped>
 .centent {
-  margin: 40px 0;
+  margin: 0.8rem 0;
   text-align: center;
 }
 .van-icon-passed {
-  font-size: 60px;
+  font-size: 1.2rem;
   color: #2fd26e;
 }
 </style>

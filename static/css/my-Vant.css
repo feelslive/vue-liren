@@ -1,7 +1,14 @@
 .van-nav-bar {
-  height: 46px;
+  height: 0.92rem;
+  line-height: 0.92rem;
   color: #fff;
+  font-size: 0.12rem;
   background-color: #000;
+  max-width: 7.5rem;
+  margin: 0 auto;
+}
+.van-nav-bar--fixed {
+  right: 0;
 }
 .van-nav-bar .van-icon,
 .van-nav-bar__text {
