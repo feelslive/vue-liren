@@ -1,27 +1,141 @@
+body {
+  background-color: #f3f5f4;
+  font-family: "微软雅黑";
+}
+
+.center .van-panel__header {
+  padding: 0 0;
+}
+.van-hairline--top-bottom::after {
+  border-width: 0 0;
+}
+.van-hairline--bottom::after {
+  border-bottom-color: #e0e5e5;
+  border-width: 0;
+}
+.van-hairline--top-bottom::after {
+  border-width: 0 0;
+}
+.center .van-panel__title {
+  height: 0.88rem;
+  line-height: 0.88rem;
+  padding-left: 0.3rem;
+  font-size: 0.28rem;
+  font-weight: bold;
+}
+.center .van-panel {
+  background-color: #f3f5f5;
+}
+.van-popup {
+  max-width: 750px;
+}
 .van-nav-bar {
   height: 0.92rem;
   line-height: 0.92rem;
   color: #fff;
   font-size: 0.12rem;
-  background-color: #000;
+  background-color: #1a1b1f;
   max-width: 7.5rem;
   margin: 0 auto;
 }
 .van-nav-bar--fixed {
   right: 0;
 }
-.van-nav-bar .van-icon,
+.van-nav-bar .van-icon {
+  color: #fff;
+  vertical-align: text-top;
+}
 .van-nav-bar__text {
   color: #fff;
 }
 .van-button {
   color: #fff;
-  border: 1px solid #169bd5;
-  background-color: #169bd5;
+  border: 1px solid #b07648;
+  background-color: #b07648;
 }
 
 .van-button--disabled {
   color: #999;
   background-color: #e5e5e5;
   border: 1px solid #ccc;
+}
+.van-checkbox--checked {
+  color: #fff;
+  border-color: #b07648;
+  background-color: #b07648;
+}
+.vancellgroup {
+  background-color: #f3f5f4;
+}
+.van-checkbox__icon {
+  width: 0.3rem;
+  height: 0.3rem;
+  line-height: 0.3rem;
+  font-size: 0.16rem;
+}
+.van-coupon-list__list {
+  padding-top: 0.5rem;
+}
+.van-coupon-list__close,
+.van-coupon-list__top {
+  display: none;
+}
+.van-coupon-item {
+  border-radius: 0.1rem;
+  border: 1px #eee solid;
+}
+.asbtn {
+  width: 80%;
+  text-align: center;
+  margin: 0.5rem auto;
+  display: block;
+}
+.centent .van-icon-warn,
+.centent .van-icon-checked {
+  font-size: 2rem;
+  color: #b07648;
+}
+.radius02rem {
+  border-radius: 0.1rem;
+}
+.radius1rem {
+  border-radius: 1rem;
+}
+
+.activate .van-cell {
+  margin: 0.3rem 0;
+}
+
+.van-coupon-item__body {
+  overflow: hidden;
+}
+.van-coupon-item__gradient h2 {
+  margin: 0;
+}
+.van-cell {
+  margin: 0.2rem 0;
+}
+#make .van-field .van-cell__title {
+  text-indent: 22px;
+}
+#make .van-picker__toolbar {
+  color: #2d8cfa;
+  padding: 0 0.2rem;
+  height: 0.88rem;
+  font-size: 0.28rem;
+}
+#make .van-coupon-item__head {
+  min-width: 2rem;
+}
+#make .van-coupon-item__gradient h2 span {
+  font-size: 0.36rem;
+}
+#make .van-checkbox__label {
+  margin-left: 0.1rem;
+}
+#make .van-coupon-list {
+  background-color: #eee;
+}
+.van-cell:not(:last-child)::after {
+  border-bottom-width: 0;
 }

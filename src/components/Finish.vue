@@ -11,11 +11,11 @@
         </div>
         <div class="centent">
          
-          <van-icon name="passed" />
-           <h2>预约完成</h2>
-           <span>您已成功预约，请您在预约日期到选定的机构完成诊疗项目</span>
+          <van-icon name="checked" />
+           <h2>您已成功预约</h2>
+           <p>请在预约日期到选定的机构完成诊疗项目</p>
            <router-link to="./" class="actbtnto"> 
-            <van-button>确定</van-button>
+            <van-button class="asbtn finishBtn radius1rem">确定</van-button>
           </router-link>
         </div>
         
@@ -35,12 +35,20 @@ export default {
 </script>
 <style scoped>
 .centent {
-  margin: 0.8rem 0;
+  margin: 2rem 0;
   text-align: center;
 }
-.van-icon-passed {
-  font-size: 1.2rem;
-  color: #2fd26e;
+.centent h2 {
+  font-size: 0.28rem;
+  color: #333;
+  margin: 0.4rem 0 0.3rem 0;
+}
+.centent p {
+  font-size: 0.24rem;
+  color: #666;
+}
+.finishBtn {
+  margin-top: 3rem;
 }
 </style>
 

@@ -9,7 +9,7 @@
             @click-left="onClickLeft" 
           />
         </div>
-        <div class="form">
+        <div class="form radius02rem">
           <van-cell-group>
              <van-field
               v-model="cardNum"
@@ -49,9 +49,16 @@
               <van-button v-show="show" slot="button" size="small" type="primary"  @click.native="handleClick()">发送验证码</van-button>
                <van-button v-show="!show" slot="button" disabled size="small">{{count}}s重新获取</van-button>
             </van-field>
-           
           </van-cell-group>
-           <van-button @click="submit">确认激活</van-button>
+          <van-button class="asbtn radius1rem" @click="submit">确认激活</van-button>
+          
+        </div>
+
+        <div class="description radius02rem">
+              <div class="des_title">产品激活说明</div>
+              <div class="des_text radius02rem">
+                <p  v-for="(item,index) in descentent" :key="index">{{item.text}}</p>
+              </div>
         </div>
     </div>
 </template>
@@ -72,7 +79,21 @@ export default {
       errsms: false,
       show: true,
       count: "",
-      isdisabled: false
+      isdisabled: false,
+      descentent: [
+        {
+          text: "1、本产品由里仁(北京)人力资源有限公司提供"
+        },
+        {
+          text: "2、本卡有效期1年，请尽快激活并预约使用"
+        },
+        {
+          text: "3、诊疗项目须在预约时的指定诊疗医院中进行"
+        },
+        {
+          text: "4、激活过程中若遇到问题可拨打客服电话：400-612-6886"
+        }
+      ]
     };
   },
   created() {},
@@ -145,6 +166,10 @@ export default {
           message: "短信验证码不能为空",
           duration: 1000
         });
+      } else {
+        this.$router.push({
+          path: "/succee"
+        });
       }
       // if (
       //   this.cardNum == "" ||
@@ -171,6 +196,27 @@ export default {
 };
 </script>
 <style scoped>
+.form {
+  overflow: hidden;
+  background-color: #fff;
+}
 
+.description {
+  margin-top: 0.2rem;
+  background-color: #fff;
+  padding: 0.3rem;
+}
+.description .des_title {
+  text-align: center;
+  margin-bottom: 0.3rem;
+  font-size: 0.3rem;
+  font-weight: bold;
+}
+.description .des_text {
+  background-color: #f3f5f4;
+  padding: 0.3rem;
+  font-size: 0.24rem;
+  line-height: 0.4rem;
+}
 </style>
 

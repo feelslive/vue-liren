@@ -10,7 +10,7 @@
           />
         </div>
          <van-icon name="passed" />
-        <van-button @click="to_activate">去预约</van-button>
+         <van-button class="asbtn radius1rem" @click="to_activate">预约使用</van-button>
     </div>
 </template>
 <script>
