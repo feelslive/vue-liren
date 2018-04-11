@@ -9,7 +9,7 @@
            @click-left="onClickLeft" 
         />
       </div>
-        <van-cell-group>
+        <van-cell-group class="logininput">
           <van-field
             v-model="userphone"
             label="预留手机号"
@@ -23,7 +23,7 @@
               center
               v-model="sms"
               label="短信验证码"
-              placeholder="请输入短信验证码"
+              placeholder="请输入验证码"
               icon="clear"
               :error = 'errsms' 
               @click-icon="sms = ''"
@@ -80,6 +80,7 @@ export default {
             }
           }, 1000);
         }
+        this.sendsms();
       } else {
         this.errphone = true;
         Toast({
@@ -88,8 +89,40 @@ export default {
         });
       }
     },
+
+    sendsms() {
+      axios
+        .get("apis/user/login/sendcode", {
+          params: {
+            cellphone: this.userphone
+          }
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     submit() {
       let _this = this;
+      if (_this.userphone != "" || _this.sms != "") {
+        // axios
+        //   .post("apis/user/login/checkcode", {
+        //     cellphone: this.userphone,
+        //     captcha: this.sms
+        //   })
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        //   .catch(function(error) {
+        //     console.log(error);
+        //   });
+      }
+
+      // headers: {
+      //             "Content-Type": "multipart/form-data"
+      //           }
 
       if (_this.userphone != "" || _this.sms != "") {
         if (_this.sms == "000000") {
@@ -100,9 +133,10 @@ export default {
             console.log(_this.userphone);
 
             axios
-              .post("apis/merchant/do/login", formdata, {
-                headers: {
-                  "Content-Type": "multipart/form-data"
+              .get("apis/user/login/checkcode", {
+                params: {
+                  cellphone: this.userphone,
+                  captcha: this.sms
                 }
               })
               .then(res => {
@@ -138,6 +172,7 @@ export default {
         });
         return false;
       }
+
       // let formdata = new FormData();
       // formdata.append({
       //   username: this.username,
@@ -148,6 +183,8 @@ export default {
 };
 </script>
 <style scoped>
-
+.logininput {
+  margin-top: 0.5rem;
+}
 </style>
 

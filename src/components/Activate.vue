@@ -42,7 +42,7 @@
               v-model="sms"
               label="短信验证码"
               :error = 'errsms'
-              placeholder="请输入短信验证码"
+              placeholder="请输入验证码"
               icon="clear"
               @click-icon="sms = ''"
             >
@@ -131,6 +131,7 @@ export default {
             }
           }, 1000);
         }
+        this.sendsms();
       } else {
         this.errphone = true;
         Toast({
@@ -138,6 +139,20 @@ export default {
           duration: 1000
         });
       }
+    },
+    sendsms() {
+      axios
+        .get("apis/user/login/sendcode", {
+          params: {
+            cellphone: this.userphone
+          }
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     submit() {
       if (this.cardNum == "") {
@@ -167,9 +182,35 @@ export default {
           duration: 1000
         });
       } else {
-        this.$router.push({
-          path: "/succee"
-        });
+        console.log(
+          "手机号==" +
+            this.userphone +
+            "验证码==" +
+            this.sms +
+            "姓名==" +
+            this.username +
+            "激活码==" +
+            this.cardNum
+        );
+        axios
+          .post("apis/liren/card/active", {
+            cellphone: this.userphone,
+            captcha: this.sms,
+            name: this.username,
+            code: this.cardNum
+          })
+          .then(res => {
+            // console.log(res.data);
+            this.$router.push({
+              path: "/succee"
+            });
+          })
+          .catch(function(error) {
+            console.log(error);
+            this.$router.push({
+              path: "/login"
+            });
+          });
       }
       // if (
       //   this.cardNum == "" ||
@@ -199,6 +240,7 @@ export default {
 .form {
   overflow: hidden;
   background-color: #fff;
+  margin-top: 0.6rem;
 }
 
 .description {

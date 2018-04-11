@@ -11,7 +11,7 @@
       </div>
      
         <div class="product" v-if="result.length">
-         
+         <div class="particulars_title">选择您已激活的产品</div>
           <div class="makeprod">
                 <!-- 激活列表 -->
                 <div class="van-coupon-list">
@@ -38,6 +38,7 @@
                 </div>
                
           </div>
+          <span class="attention" style="display:block;margin-top:.2rem">注：到院诊疗时，若机构无法提供套餐中的某些诊疗项，可使用同等价值的其他产品进行替换</span>
           <div class="particulars_title">预约信息</div>
           <div class="makeform">
             <van-cell-group class="vancellgroup">
@@ -118,13 +119,23 @@
                 @change="ChangeTime"
               />
             </van-popup>
-            <span class="attention" @click="alert">注：预约完成后，客服人员与您联系告知具体诊疗时间</span>
+            <span class="attention">注：预约完成后，客服人员与您联系告知具体诊疗时间</span>
             <div class="reads">
                  <van-checkbox class="vcheckbox" v-model="checked">我已阅读并同意 </van-checkbox>
-                 <router-link to="/">《投保须知》</router-link><router-link to="/">《保险条例》</router-link>
+                 <span @click="showpopup = true;">《投保须知》</span><span @click="showpopup = true;">《保险条例》</span>
             </div>
             <van-button class="asbtn radius1rem" @click.native="submit">确认预约</van-button>
           </div>
+          <van-popup v-model="showpopup" class="notice" position="bottom">
+            <van-tabs>
+              <van-tab title="《投保须知》">
+               <notice></notice>
+              </van-tab>
+              <van-tab title="《保险条例》">
+                <attens></attens>
+              </van-tab>
+            </van-tabs>
+          </van-popup>
         </div>
       
 
@@ -145,9 +156,10 @@
 <script>
 import * as types from "../store/types";
 import axios from "../api/http";
-// import { formatDate } from "../../static/js/date";
 import { Toast } from "vant";
 import { Dialog } from "vant";
+import attens from "../components/attens";
+import notice from "../components/notice";
 const citys = {
   北京: ["朝阳", "海淀", "东城", "西城", "丰台"],
   天津: ["福州", "厦门", "莆田", "三明", "泉州"]
@@ -155,6 +167,7 @@ const citys = {
 export default {
   data() {
     return {
+      showpopup: false,
       current: 0,
       userIdnumber: "",
       errIdnumber: false,
@@ -247,6 +260,10 @@ export default {
       sTime: ""
     };
   },
+  components: {
+    attens,
+    notice
+  },
   filters: {
     formatDate(time) {
       var date = new Date(time * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -298,8 +315,8 @@ export default {
     },
     alert() {
       Dialog.alert({
-        title: "标题",
-        message: "弹窗内容"
+        title: "温馨提示",
+        message: "注：预约完成后，若预约时间不可用，客服人员将与您联系"
       }).then(() => {
         // on close
       });
@@ -380,6 +397,7 @@ export default {
       Toast(`当前值：${value}, 当前索引：${index}`);
       console.log(value);
       this.sTime = value;
+      this.alert();
     },
     CancelTime() {
       this.isSelectTime = !this.isSelectTime;
@@ -434,6 +452,9 @@ export default {
           this.sDate +
           this.sTime
       );
+      this.$router.push({
+        path: "/finish"
+      });
       // axios
       //   .get("./user", params)
       //   .then(res => {
@@ -449,8 +470,7 @@ export default {
         path: "/login"
       });
     }
-  },
-  components: {}
+  }
 };
 </script>
 <style scoped>
@@ -461,7 +481,7 @@ export default {
   border: #fb3131 1px solid;
 }
 .product {
-  padding: 0.2rem;
+  padding: 0 0.2rem 0.2rem;
 }
 .makeprod {
   height: 5rem;
@@ -482,9 +502,7 @@ export default {
   bottom: 0;
   width: 100%;
 }
-.attention {
-  color: #fb3131;
-}
+
 .attenshowbg {
   overflow-y: auto;
 }
@@ -535,6 +553,10 @@ export default {
   z-index: 2000;
   background: url("../../static/img/userId@2x.png") center;
   background-size: 100%;
+}
+.notice {
+  height: 6rem;
+  overflow-y: auto;
 }
 </style>
 

@@ -6,6 +6,10 @@ body {
 .center .van-panel__header {
   padding: 0 0;
 }
+
+#home .van-hairline--bottom::after {
+  border-bottom-width: 1px;
+}
 .van-hairline--top-bottom::after {
   border-width: 0 0;
 }
@@ -24,6 +28,9 @@ body {
   font-weight: bold;
 }
 .center .van-panel {
+  background-color: #fff;
+}
+#activate .van-cell-group {
   background-color: #f3f5f5;
 }
 .van-popup {
@@ -73,8 +80,8 @@ body {
   line-height: 0.3rem;
   font-size: 0.16rem;
 }
-.van-coupon-list__list {
-  padding-top: 0.5rem;
+.attention {
+  color: #fb3131;
 }
 .van-coupon-list__close,
 .van-coupon-list__top {
@@ -83,6 +90,7 @@ body {
 .van-coupon-item {
   border-radius: 0.1rem;
   border: 1px #eee solid;
+  height: 1.8rem;
 }
 .asbtn {
   width: 80%;
@@ -91,6 +99,7 @@ body {
   display: block;
 }
 .centent .van-icon-warn,
+.succes .van-icon-checked,
 .centent .van-icon-checked {
   font-size: 2rem;
   color: #b07648;
@@ -113,7 +122,7 @@ body {
   margin: 0;
 }
 .van-cell {
-  margin: 0.2rem 0;
+  margin: 0 0 0.2rem 0;
 }
 #make .van-field .van-cell__title {
   text-indent: 22px;
@@ -138,4 +147,14 @@ body {
 }
 .van-cell:not(:last-child)::after {
   border-bottom-width: 0;
+}
+
+#make .van-tabs__wrap {
+  position: fixed;
+  border-bottom: 1px solid #ccc;
+}
+#make .van-tabs__content {
+  height: 6rem;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }

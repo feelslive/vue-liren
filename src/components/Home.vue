@@ -29,6 +29,7 @@
     </div>
 </template>
 <script>
+import axios from "../api/http";
 export default {
   data() {
     return {
@@ -71,6 +72,18 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    axios
+      .get("apis/liren/info/content")
+      .then(res => {
+        console.log(res.data.result);
+        // this.result = res.data.result;
+        // console.log(this.result);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>
@@ -145,7 +158,7 @@ export default {
   font-size: 0.24rem;
   color: #666;
   margin: 0 0 0.2rem 0;
-  padding: 0.3rem 0.3rem;
+  padding: 0.2rem 0.3rem 0.4rem 0.3rem;
   line-height: 0.36rem;
 }
 </style>

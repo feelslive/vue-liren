@@ -9,7 +9,6 @@ import activate from "@/components/Activate";
 import succee from "@/components/Succee";
 import notactivate from "@/components/NotActivate";
 import NotFound from "@/components/NotFound";
-
 Vue.use(Router);
 
 export default new Router({
