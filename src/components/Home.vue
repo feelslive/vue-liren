@@ -16,6 +16,7 @@
           </div>
           </van-col>
         </van-row>
+        <div class="query" @click="query"></div>
       </div>
       <div class="particulars">
         <div class="particulars_title">内容详情</div>
@@ -24,8 +25,7 @@
             <div class="det-text">{{item.details}}</div>
           </van-panel>
         </div>
-      </div>
-       
+      </div> 
     </div>
 </template>
 <script>
@@ -84,6 +84,13 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+  },
+  methods: {
+    query() {
+      this.$router.push({
+        path: "./examine"
+      });
+    }
   }
 };
 </script>
@@ -128,7 +135,6 @@ export default {
   text-align: center;
   margin: 0.4rem 0;
 }
-
 .particulars_title {
   color: #333;
   font-weight: bold;
@@ -136,6 +142,7 @@ export default {
   text-indent: 0.1rem;
   border-left: solid #b07648 0.1rem;
   margin-bottom: 0.3rem;
+  padding-top: 0.04rem;
 }
 
 .center {
@@ -160,6 +167,17 @@ export default {
   margin: 0 0 0.2rem 0;
   padding: 0.2rem 0.3rem 0.4rem 0.3rem;
   line-height: 0.36rem;
+}
+.query {
+  position: fixed;
+  right: 0.2rem;
+  top: 5.5rem;
+  height: 1.24rem;
+  width: 1.24rem;
+  border-radius: 50%;
+  background: url("../../static/img/query@2x.png") center;
+  background-size: 100%;
+  z-index: 10;
 }
 </style>
 

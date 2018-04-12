@@ -9,9 +9,9 @@
         @click-left="onClickLeft" 
       />
      </div>
-      <div class="center">
-          <van-panel class="radius02rem" v-for="(item,index) in dets" :key="index" :title="item.title" :status="item.status">
-            <div class="det-text">{{item.details}}</div>
+      <div class="center" v-for="(item,index) in result" :key="index">
+          <van-panel class="radius02rem" v-for="(lisitem,index) in item.list" :key="index" :title="lisitem.name" :status="lisitem.price">
+            <div class="det-text" >{{lisitem.info}}</div>
           </van-panel>
       </div>
       
@@ -19,9 +19,11 @@
 </template>
 <script>
 import { Button } from "vant";
+import axios from "../api/http";
 export default {
   data() {
     return {
+      result: [],
       // fixed: true,
       dets: [
         {
@@ -63,6 +65,19 @@ export default {
       ]
     };
   },
+  created() {
+    axios
+      .get("apis/liren/info/content")
+      .then(res => {
+        console.log(res.data.result);
+        this.result = res.data.result;
+        // console.log(this.result);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    // console.log(typeof new Date());
+  },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
@@ -76,13 +91,13 @@ export default {
 }
 .center {
   /* padding: 0 15px; */
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
   font-size: 0.24rem;
 }
 
 .det-text {
   margin: 0 0 0.2rem 0;
-  padding: 0.3rem 0.3rem;
+  padding: 0 0.3rem 0.4rem;
   line-height: 0.36rem;
 }
 

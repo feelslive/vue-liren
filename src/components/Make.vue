@@ -7,6 +7,7 @@
           left-arrow 
           :fixed = true 
            @click-left="onClickLeft" 
+           style="z-index:100000"
         />
       </div>
      
@@ -18,22 +19,22 @@
                   <div class="van-coupon-list__list">
                     <div class="van-coupon-item make_lists_item" :class="{redborder:index==current}" @click="selectone(index)" v-for="(item,index) in result" :key="index">
                       <div class="van-coupon-item__head">
-                        <div class="van-coupon-item__lines">
-                        </div>
+                        <!-- <div class="van-coupon-item__lines">
+                        </div> -->
                         <div class="van-coupon-item__gradient">
-                          <h2><span>¥</span> 8000</h2>
+                          <h2>8000<span>元</span></h2>
                         </div>
                       </div>
                       <div class="van-coupon-item__body">
                         <h2>{{item.code}}</h2>
-                        <span>{{item.start_time | formatDate}}~{{item.end_time | formatDate}}</span><!---->
+                        <span class="van-coupon-item__body_dates">有效期:{{item.start_time | formatDate}}~{{item.end_time | formatDate}}</span><!---->
                         <router-link to="/details">查看详情</router-link>
                           <div v-show="selectoneshow" class="van-coupon-item__corner">
                             <i class="van-icon van-icon-success"></i>
                           </div>
                       </div> 
                     </div>
-                    <p style="color:#ccc;text-align: center;margin-top:.8rem">没有更多了~</p>
+                    <p style="color:#ccc;text-align: center;margin-top:.6rem">没有更多了~</p>
                   </div>
                 </div>
                
@@ -48,7 +49,10 @@
                 <!-- </template> -->
               </van-cell>
               <van-cell class="radius02rem" :value="sSite" title="选择机构" icon="shop" is-link @click.native="selectSite"/>
-              
+              <div class="map"><span>中关村创业大街188号上帝国际B坐3333</span>
+              <!-- <router-link to=""  @click="show5 = true" class="blue">查看地图</router-link> -->
+              <a class="blue"  @click="show5 = true" >查看地图</a>
+              </div>
               <div class="userIdinput">
                 <i class="userIdnum_icon"></i>
                 <van-field
@@ -62,7 +66,7 @@
               </div>
               
               <van-cell class="radius02rem" :value="sDate" title="选择时间" icon="clock" is-link @click.native="selectDate"/>
-              <van-cell class="radius02rem" :value="sTime" title="选择时段" icon="sign" is-link @click.native="selectTime"/>
+              <van-cell class="radius02rem" :value="sTime" title="选择时辰" icon="sign" is-link @click.native="selectTime"/>
             </van-cell-group>
             <!-- <div class="ctiy_picker">
               <van-picker
@@ -109,7 +113,7 @@
               />
             </van-popup>
 
-             <!-- 选择时段 -->
+             <!-- 选择时辰 -->
             <van-popup v-model="isSelectTime" position="bottom" :overlay="true">
               <van-picker
                 show-toolbar
@@ -136,6 +140,11 @@
               </van-tab>
             </van-tabs>
           </van-popup>
+          <!-- 弹出地图 -->
+          <van-popup v-model="show5" position="right" class="map_alert">
+            <van-button @click="show5 = false" style="z-index:2;position:fixed">关闭</van-button>
+            <my-map></my-map>
+          </van-popup>
         </div>
       
 
@@ -160,6 +169,7 @@ import { Toast } from "vant";
 import { Dialog } from "vant";
 import attens from "../components/attens";
 import notice from "../components/notice";
+import map from "../components/Map";
 const citys = {
   北京: ["朝阳", "海淀", "东城", "西城", "丰台"],
   天津: ["福州", "厦门", "莆田", "三明", "泉州"]
@@ -167,6 +177,7 @@ const citys = {
 export default {
   data() {
     return {
+      show5: false,
       showpopup: false,
       current: 0,
       userIdnumber: "",
@@ -253,7 +264,17 @@ export default {
         }
       ],
       sitecolumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
-      timecolumns: ["上午", "下午"],
+      timecolumns: [
+        "09:00",
+        "10:00",
+        "11:00",
+        "12:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00"
+      ],
       sCity: "",
       sSite: "",
       sDate: "",
@@ -262,7 +283,8 @@ export default {
   },
   components: {
     attens,
-    notice
+    notice,
+    myMap: map
   },
   filters: {
     formatDate(time) {
@@ -283,6 +305,16 @@ export default {
     this.getProduct();
     this.setminDate();
     this.setmaxDate();
+    axios
+      .get("apis/liren/card/codelist")
+      .then(res => {
+        console.log(res.data.result);
+        this.result = res.data.result;
+        // console.log(this.result);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     // console.log(typeof new Date());
   },
   mounted() {
@@ -474,6 +506,10 @@ export default {
 };
 </script>
 <style scoped>
+.map_alert {
+  width: 100%;
+  height: 100%;
+}
 #app {
   background-color: #f3f5f5;
 }
@@ -481,7 +517,7 @@ export default {
   border: #fb3131 1px solid;
 }
 .product {
-  padding: 0 0.2rem 0.2rem;
+  padding: 0 0.025rem 0.2rem;
 }
 .makeprod {
   height: 5rem;
@@ -496,6 +532,9 @@ export default {
   display: inline-block;
   vertical-align: sub;
 }
+.reads span {
+  color: #2b8cfa;
+}
 
 .ctiy_picker {
   position: fixed;
@@ -509,7 +548,7 @@ export default {
 .make_lists_item a {
   display: inline-block;
   color: #2b8cfa;
-  margin-top: 0.1rem;
+  margin-top: 0.2rem;
   border-radius: 0.1rem;
 }
 
@@ -519,7 +558,8 @@ export default {
   font-size: 0.28rem;
   text-indent: 0.1rem;
   border-left: solid #b07648 0.1rem;
-  margin: 0.4rem 0;
+  margin: 0.3rem 0;
+  padding-top: 0.04rem;
 }
 .centent {
   font-family: "微软雅黑";
@@ -557,6 +597,32 @@ export default {
 .notice {
   height: 6rem;
   overflow-y: auto;
+}
+.van-coupon-item__body h2 {
+  font-size: 0.24rem;
+}
+
+.van-coupon-item__body_dates {
+  font-size: 0.2rem;
+  color: #666;
+  margin-top: 0.2rem;
+}
+.map {
+  font-size: 0.2rem;
+  margin: 0.1rem 0 0.3rem 0;
+  overflow: hidden;
+}
+.map span {
+  float: left;
+  width: 80%;
+  line-height: 0.25rem;
+  display: inline-block;
+  text-align: left;
+}
+.map a {
+  display: inline-block;
+  float: right;
+  line-height: 0.3rem;
 }
 </style>
 

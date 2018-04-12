@@ -20,14 +20,16 @@
               @click-icon="cardNum = ''"
               @blur="blur"
               @focus="focusNum"
+              class="radius02rem "
             />
             <van-field
               v-model="username"
-              label="用户名"
+              label="姓名"
               icon="clear"
               :error = 'errusername' 
-              placeholder="请输入用户名"
+              placeholder="请输入您的姓名"
               @click-icon="username = ''"
+              class="radius02rem "
             />
             <van-field
               v-model="userphone"
@@ -36,6 +38,7 @@
               :error = 'erruserphone'
               placeholder="请输入手机号"
               @click-icon="userphone = ''"
+              class="radius02rem "
             />
             <van-field
               center
@@ -45,6 +48,7 @@
               placeholder="请输入验证码"
               icon="clear"
               @click-icon="sms = ''"
+              class="radius02rem "
             >
               <van-button v-show="show" slot="button" size="small" type="primary"  @click.native="handleClick()">发送验证码</van-button>
                <van-button v-show="!show" slot="button" disabled size="small">{{count}}s重新获取</van-button>
@@ -79,6 +83,7 @@ export default {
       errsms: false,
       show: true,
       count: "",
+      isLogin: 100,
       isdisabled: false,
       descentent: [
         {
@@ -200,7 +205,8 @@ export default {
             code: this.cardNum
           })
           .then(res => {
-            // console.log(res.data);
+            console.log(res.data);
+            this.$store.commit(types.ISLOGIN, this.isLogin);
             this.$router.push({
               path: "/succee"
             });

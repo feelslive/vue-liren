@@ -7,8 +7,10 @@ import finish from "@/components/Finish";
 import details from "@/components/Details";
 import activate from "@/components/Activate";
 import succee from "@/components/Succee";
+import examine from "@/components/Examine";
 import notactivate from "@/components/NotActivate";
 import NotFound from "@/components/NotFound";
+import map from "@/components/Map";
 Vue.use(Router);
 
 export default new Router({
@@ -39,22 +41,50 @@ export default new Router({
     {
       path: "/finish",
       name: "finish",
+      meta: {
+        requireAuth: true
+      },
       component: finish
     },
     {
       path: "/details",
       name: "details",
+      meta: {
+        requireAuth: true
+      },
       component: details
     },
     {
       path: "/succee",
       name: "succee",
+      meta: {
+        requireAuth: true
+      },
       component: succee
+    },
+    {
+      path: "/examine",
+      name: "examine",
+      meta: {
+        requireAuth: true
+      },
+      component: examine
     },
     {
       path: "/notactivate",
       name: "notactivate",
+      meta: {
+        requireAuth: true
+      },
       component: notactivate
+    },
+    {
+      path: "/map",
+      name: "map",
+      meta: {
+        requireAuth: true
+      },
+      component: map
     },
     { path: "*", component: NotFound }
   ]

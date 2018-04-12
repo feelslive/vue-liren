@@ -46,22 +46,30 @@ import axios from "../api/http";
 export default {
   data() {
     return {
-      result: []
+      result: [
+        {
+          name: "123",
+          price: "8000元",
+          period: "2018-03-20～2019-03-19",
+          list: [
+            { name: "大奇葩", price: "360元/1次" },
+            { name: "大奇葩", price: "360元/1次" }
+          ]
+        }
+      ]
     };
   },
   created() {
-    axios
-      .get("apis/liren/info/content")
-      .then(res => {
-        if (res.data.result.ret_code == "200") {
-        }
-        console.log(res.data.result);
-        this.result = res.data.result;
-        // console.log(this.result);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // axios
+    //   .get("apis/liren/info/content")
+    //   .then(res => {
+    //     console.log(res.data.result);
+    //     // this.result = res.data.result;
+    //     // console.log(this.result);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
   },
   methods: {
     onClickLeft() {

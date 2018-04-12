@@ -18,6 +18,7 @@
             :error = 'errphone' 
             @click-icon="userphone = ''"
             @focus = "focusphone"
+            class="radius02rem "
           />
            <van-field
               center
@@ -28,6 +29,7 @@
               :error = 'errsms' 
               @click-icon="sms = ''"
               @focus = "focussms"
+              class="radius02rem "
             >
               <van-button v-show="show" slot="button" size="small" type="primary"  @click.native="handleClick()">发送验证码</van-button>
               <van-button v-show="!show" slot="button" disabled size="small">{{count}}s重新获取</van-button>
@@ -107,71 +109,77 @@ export default {
     submit() {
       let _this = this;
       if (_this.userphone != "" || _this.sms != "") {
-        // axios
-        //   .post("apis/user/login/checkcode", {
-        //     cellphone: this.userphone,
-        //     captcha: this.sms
-        //   })
-        //   .then(res => {
-        //     console.log(res);
-        //   })
-        //   .catch(function(error) {
-        //     console.log(error);
-        //   });
+        axios
+          .post("apis/user/login/checkcode", {
+            cellphone: this.userphone,
+            captcha: this.sms
+          })
+          .then(res => {
+            console.log(res);
+            this.$store.commit(types.ISLOGIN, this.isLogin);
+            let Rurl = decodeURIComponent(this.$route.query.Rurl);
+            console.log(this.$route.query.Rurl);
+            this.$router.push({
+              path: Rurl || "/"
+            });
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       }
 
       // headers: {
       //             "Content-Type": "multipart/form-data"
       //           }
 
-      if (_this.userphone != "" || _this.sms != "") {
-        if (_this.sms == "000000") {
-          if (this.isLogin) {
-            var formdata = new FormData();
-            formdata.append("userphone", _this.userphone);
-            formdata.append("sms", _this.sms);
-            console.log(_this.userphone);
+      // if (_this.userphone != "" || _this.sms != "") {
+      //   if (_this.sms == "000000") {
+      //     if (this.isLogin) {
+      //       var formdata = new FormData();
+      //       formdata.append("userphone", _this.userphone);
+      //       formdata.append("sms", _this.sms);
+      //       console.log(_this.userphone);
 
-            axios
-              .get("apis/user/login/checkcode", {
-                params: {
-                  cellphone: this.userphone,
-                  captcha: this.sms
-                }
-              })
-              .then(res => {
-                console.log(res);
-              })
-              .catch(function(error) {
-                console.log(error);
-              });
-          }
+      //       axios
+      //         .get("apis/user/login/checkcode", {
+      //           params: {
+      //             cellphone: this.userphone,
+      //             captcha: this.sms
+      //           }
+      //         })
+      //         .then(res => {
+      //           console.log(res);
+      //         })
+      //         .catch(function(error) {
+      //           console.log(error);
+      //         });
+      //     }
 
-          this.$store.commit(types.ISLOGIN, this.isLogin);
-          //登录后改变登录状态 isLogin = 100 ；
-          let redirect = decodeURIComponent(
-            this.$route.query.redirect || "/make"
-          );
-          this.$router.push({
-            path: redirect
-          });
-        } else {
-          this.errsms = true;
-          Toast({
-            message: "验证码错误",
-            duration: 1000
-          });
-          return false;
-        }
-      } else {
-        this.errphone = true;
-        this.errsms = true;
-        Toast({
-          message: "不能为空",
-          duration: 1000
-        });
-        return false;
-      }
+      //     this.$store.commit(types.ISLOGIN, this.isLogin);
+      //     //登录后改变登录状态 isLogin = 100 ；
+      //     let redirect = decodeURIComponent(
+      //       this.$route.query.redirect || "/make"
+      //     );
+      //     this.$router.push({
+      //       path: redirect
+      //     });
+      //   } else {
+      //     this.errsms = true;
+      //     Toast({
+      //       message: "验证码错误",
+      //       duration: 1000
+      //     });
+      //     return false;
+      //   }
+      // } else {
+      //   this.errphone = true;
+      //   this.errsms = true;
+      //   Toast({
+      //     message: "不能为空",
+      //     duration: 1000
+      //   });
+      //   return false;
+      // }
 
       // let formdata = new FormData();
       // formdata.append({
