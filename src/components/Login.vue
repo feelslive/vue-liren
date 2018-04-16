@@ -1,6 +1,6 @@
 <template>  
-    <div id="login">
-      <div class="title">
+    <div id="login" class="padding03rem">
+      <!-- <div class="title">
         <van-nav-bar
           title="验证手机号"
           left-text="返回"
@@ -8,7 +8,7 @@
           :fixed = true 
            @click-left="onClickLeft" 
         />
-      </div>
+      </div> -->
         <van-cell-group class="logininput">
           <van-field
             v-model="userphone"
@@ -39,6 +39,7 @@
     </div>
 </template>
 <script>
+import vuex from "vuex";
 import * as types from "../store/types";
 import axios from "../api/http";
 import { Toast } from "vant";
@@ -109,23 +110,30 @@ export default {
     submit() {
       let _this = this;
       if (_this.userphone != "" || _this.sms != "") {
-        axios
-          .post("apis/user/login/checkcode", {
-            cellphone: this.userphone,
-            captcha: this.sms
-          })
-          .then(res => {
-            console.log(res);
-            this.$store.commit(types.ISLOGIN, this.isLogin);
-            let Rurl = decodeURIComponent(this.$route.query.Rurl);
-            console.log(this.$route.query.Rurl);
-            this.$router.push({
-              path: Rurl || "/"
-            });
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+        this.$store.commit(types.ISLOGIN, this.isLogin);
+        let Rurl = decodeURIComponent(this.$route.query.Rurl);
+        console.log(this.$route.query.Rurl);
+        this.$router.push({
+          path: Rurl || "./"
+        });
+        this.$store.commit("cellphone", this.userphone);
+        // axios
+        //   .post("apis/user/login/checkcode", {
+        //     cellphone: this.userphone,
+        //     captcha: this.sms
+        //   })
+        //   .then(res => {
+        //     console.log(res);
+        //     this.$store.commit(types.ISLOGIN, this.isLogin);
+        //     let Rurl = decodeURIComponent(this.$route.query.Rurl);
+        //     console.log(this.$route.query.Rurl);
+        //     this.$router.push({
+        //       path: Rurl || "/"
+        //     });
+        //   })
+        //   .catch(function(error) {
+        //     console.log(error);
+        //   });
       }
 
       // headers: {

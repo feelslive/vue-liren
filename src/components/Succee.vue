@@ -1,6 +1,6 @@
 <template>  
-    <div id="succee">
-        <div class="title">
+    <div id="succee" class="padding03rem">
+        <!-- <div class="title">
             <van-nav-bar
             title="激活成功"
             left-text="返回"
@@ -8,7 +8,7 @@
             :fixed = true 
             @click-left="onClickLeft" 
           />
-        </div>
+        </div> -->
 
 
         <div class="sucbox">
@@ -42,21 +42,12 @@
     </div>
 </template>
 <script>
+import { mapMutations, mapState } from "vuex";
 import axios from "../api/http";
 export default {
   data() {
     return {
-      result: [
-        {
-          name: "123",
-          price: "8000元",
-          period: "2018-03-20～2019-03-19",
-          list: [
-            { name: "大奇葩", price: "360元/1次" },
-            { name: "大奇葩", price: "360元/1次" }
-          ]
-        }
-      ]
+      // result: []
     };
   },
   created() {
@@ -64,14 +55,23 @@ export default {
     //   .get("apis/liren/info/content")
     //   .then(res => {
     //     console.log(res.data.result);
-    //     // this.result = res.data.result;
+    //     this.result = res.data.result;
     //     // console.log(this.result);
     //   })
     //   .catch(function(error) {
     //     console.log(error);
     //   });
+    this.getproduct();
   },
+  computed: mapState({
+    result(state) {
+      return state.result;
+    }
+  }),
   methods: {
+    ...mapMutations({
+      getproduct: "getproduct"
+    }),
     onClickLeft() {
       this.$router.push({
         path: "/"

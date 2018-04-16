@@ -11,6 +11,8 @@ import examine from "@/components/Examine";
 import notactivate from "@/components/NotActivate";
 import NotFound from "@/components/NotFound";
 import map from "@/components/Map";
+import notice from "@/components/notice";
+import attens from "@/components/attens";
 Vue.use(Router);
 
 export default new Router({
@@ -29,7 +31,8 @@ export default new Router({
       path: "/make",
       name: "make",
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive: true
       },
       component: make
     },
@@ -82,9 +85,26 @@ export default new Router({
       path: "/map",
       name: "map",
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive: false
       },
       component: map
+    },
+    {
+      path: "/attens",
+      name: "attens",
+      meta: {
+        requireAuth: true
+      },
+      component: attens
+    },
+    {
+      path: "/notice",
+      name: "notice",
+      meta: {
+        requireAuth: true
+      },
+      component: notice
     },
     { path: "*", component: NotFound }
   ]

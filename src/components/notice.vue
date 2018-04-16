@@ -1,5 +1,5 @@
 <template>
-  <div class="notice">
+  <div class="notice padding03rem">
         <h4>1、投保范围：</h4>
         <p>本保险特别约定为年龄在十八周岁至七十周岁的身体健康者，均可作为被保险人。</p>
         <h4>2、保障期间：</h4>

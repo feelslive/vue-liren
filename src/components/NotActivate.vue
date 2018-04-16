@@ -1,6 +1,6 @@
 <template>  
-    <div id="NotActivate">
-        <div class="title">
+    <div id="NotActivate" class="padding03rem">
+        <!-- <div class="title">
             <van-nav-bar
             title="预约诊疗"
             left-text="返回"
@@ -8,7 +8,7 @@
             :fixed = true 
             @click-left="onClickLeft" 
           />
-        </div>
+        </div> -->
         <div class="centent">
           <van-icon name="info-o" />
            <h2>您还未激活绑定诊疗项目产品，请先激活后再预约</h2>

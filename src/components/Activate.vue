@@ -1,6 +1,6 @@
 <template>  
-    <div id="activate">
-        <div class="title">
+    <div id="activate" class="padding03rem">
+        <!-- <div class="title">
             <van-nav-bar
             title="激活绑定"
             left-text="返回"
@@ -8,7 +8,7 @@
             :fixed = true 
             @click-left="onClickLeft" 
           />
-        </div>
+        </div> -->
         <div class="form radius02rem">
           <van-cell-group>
              <van-field
@@ -160,6 +160,7 @@ export default {
         });
     },
     submit() {
+      let _this = this;
       if (this.cardNum == "") {
         this.errcardNum = true;
         Toast({
@@ -206,14 +207,14 @@ export default {
           })
           .then(res => {
             console.log(res.data);
-            this.$store.commit(types.ISLOGIN, this.isLogin);
-            this.$router.push({
-              path: "/succee"
-            });
+            // this.$store.commit(types.ISLOGIN, this.isLogin);
+            // this.$router.push({
+            //   path: "/succee"
+            // });
           })
           .catch(function(error) {
             console.log(error);
-            this.$router.push({
+            _this.$router.push({
               path: "/login"
             });
           });

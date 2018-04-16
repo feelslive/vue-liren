@@ -1,6 +1,6 @@
 <template>
-<div class="ex_box">
-  <div class="title">
+<div class="ex_box padding03rem">
+  <!-- <div class="title">
         <van-nav-bar
           title="预约详情"
           left-text="返回"
@@ -8,8 +8,8 @@
           :fixed = true 
            @click-left="onClickLeft" 
         />
-    </div>
-   <div class="examine" v-if="result.length">
+    </div> -->
+   <div class="examine" v-if="result">
     <div class="examineTitle">
       <div class="exa_tit">
           <div class="examine_title">产品详情</div>
@@ -75,23 +75,40 @@
  
 </template>
 <script>
+//liren/card/appointlist?cellphone=15510525668
+import { mapMutations, mapState } from "vuex";
+import * as types from "../store/types";
+import axios from "../api/http";
 export default {
   data() {
     return {
-      result: [
-        {
-          name: "123",
-          price: "8000元",
-          period: "2018-03-20～2019-03-19",
-          list: [
-            { name: "大奇葩", price: "360元/1次" },
-            { name: "大奇葩", price: "360元/1次" }
-          ]
-        }
-      ]
+      userphone: 15510525668
     };
   },
+  created() {
+    this.getproduct();
+    axios
+      .get("apis/liren/card/appointlist", {
+        params: {
+          cellphone: this.userphone
+        }
+      })
+      .then(res => {
+        // console.log(res);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
+  computed: mapState({
+    result(state) {
+      return state.result;
+    }
+  }),
   methods: {
+    ...mapMutations({
+      getproduct: "getproduct"
+    }),
     onClickLeft() {
       this.$router.push({ path: "./" });
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="attens">
+  <div class="attens padding03rem">
                   <h3>中国人民财产保险股份有限公司</h3>
                   <h4>手术意外伤害保险条款</h4>
 
@@ -131,6 +131,9 @@ export default {
   name: "attens",
   data() {
     return {};
+  },
+  created() {
+    window.scrollTo(0, 0);
   }
 };
 </script>
@@ -141,7 +144,6 @@ export default {
 }
 .attens p {
   text-indent: 0.4rem;
-  
 }
 </style>
 

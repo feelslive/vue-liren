@@ -1,5 +1,5 @@
 <template>  
-    <div id="home">
+    <div id="home" class="padding03rem">
       <div class="img radius02rem">
         <img class="radius02rem" src="../../static/img/banner@2x.png" alt="">
       </div>
@@ -20,11 +20,11 @@
       </div>
       <div class="particulars">
         <div class="particulars_title">内容详情</div>
-        <div class="center">
-          <van-panel class="radius02rem" v-for="(item,index) in dets" :key="index" :title="item.title">
-            <div class="det-text">{{item.details}}</div>
+        <div class="center" v-for="(item,index) in results" :key="index">
+          <van-panel class="radius02rem" v-for="(lisitem,index) in item.list" :key="index" :title="lisitem.name" :status="lisitem.price">
+            <div class="det-text" >{{lisitem.info}}</div>
           </van-panel>
-        </div>
+      </div>
       </div> 
     </div>
 </template>
@@ -33,6 +33,7 @@ import axios from "../api/http";
 export default {
   data() {
     return {
+      results: [],
       dets: [
         {
           title: "韩国大气泡",
@@ -78,12 +79,13 @@ export default {
       .get("apis/liren/info/content")
       .then(res => {
         console.log(res.data.result);
-        // this.result = res.data.result;
-        // console.log(this.result);
+        this.$store.commit("saveproduct", res.data.result);
+        this.results = res.data.result;
       })
       .catch(function(error) {
         console.log(error);
       });
+    // console.log(typeof new Date());
   },
   methods: {
     query() {

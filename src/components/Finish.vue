@@ -1,6 +1,6 @@
 <template>  
-    <div id="finish">
-        <div class="title">
+    <div id="finish" class="padding03rem">
+        <!-- <div class="title">
             <van-nav-bar
             title="预约完成"
             left-text="返回"
@@ -8,15 +8,14 @@
             :fixed = true 
             @click-left="onClickLeft" 
           />
-        </div>
+        </div> -->
         <div class="centent">
          
           <van-icon name="checked" />
            <h2>您已成功预约</h2>
            <p>请在预约日期到选定的机构完成诊疗项目</p>
-           <router-link to="./" class="actbtnto"> 
-            <van-button class="asbtn finishBtn radius1rem">确定</van-button>
-          </router-link>
+           
+            <van-button class="asbtn finishBtn radius1rem" @click="finishbtn">确定</van-button>
         </div>
         
     </div>
@@ -28,7 +27,10 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.back(-1);
+      this.$router.replace("/make");
+    },
+    finishbtn() {
+      this.$router.replace("/");
     }
   }
 };

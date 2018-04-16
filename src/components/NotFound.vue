@@ -1,5 +1,5 @@
 <template>
-  <div class="defined">
+  <div class="defined padding03rem">
       <h1>404</h1>
   </div>
 </template>

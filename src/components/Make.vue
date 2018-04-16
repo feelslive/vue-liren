@@ -1,6 +1,6 @@
 <template>  
-    <div id="make">
-      <div class="title">
+    <div id="make" class="padding03rem">
+      <!-- <div class="title">
         <van-nav-bar
           :title= this.title
           left-text="返回"
@@ -9,15 +9,17 @@
            @click-left="onClickLeft" 
            style="z-index:100000"
         />
-      </div>
+      </div> -->
      
-        <div class="product" v-if="result.length">
+        <div class="product" v-if="resultshow">
          <div class="particulars_title">选择您已激活的产品</div>
           <div class="makeprod">
                 <!-- 激活列表 -->
+               
                 <div class="van-coupon-list">
                   <div class="van-coupon-list__list">
-                    <div class="van-coupon-item make_lists_item" :class="{redborder:index==current}" @click="selectone(index)" v-for="(item,index) in result" :key="index">
+                    <van-loading v-if="loading" color="black" style="margin:0 auto"/>
+                    <div class="van-coupon-item make_lists_item" :class="{redborder:index==current}" @click="selectone(item,index)" v-for="(item,index) in result" :key="index">
                       <div class="van-coupon-item__head">
                         <!-- <div class="van-coupon-item__lines">
                         </div> -->
@@ -49,9 +51,9 @@
                 <!-- </template> -->
               </van-cell>
               <van-cell class="radius02rem" :value="sSite" title="选择机构" icon="shop" is-link @click.native="selectSite"/>
-              <div class="map"><span>中关村创业大街188号上帝国际B坐3333</span>
-              <!-- <router-link to=""  @click="show5 = true" class="blue">查看地图</router-link> -->
-              <a class="blue"  @click="show5 = true" >查看地图</a>
+              <div class="map_text" v-if="mapshow"><span>{{address}}</span>
+              <router-link to="/map" class="blue">查看地图</router-link>
+              <!-- <a class="blue"  @click="show5 = true" >查看地图</a> -->
               </div>
               <div class="userIdinput">
                 <i class="userIdnum_icon"></i>
@@ -68,17 +70,6 @@
               <van-cell class="radius02rem" :value="sDate" title="选择时间" icon="clock" is-link @click.native="selectDate"/>
               <van-cell class="radius02rem" :value="sTime" title="选择时辰" icon="sign" is-link @click.native="selectTime"/>
             </van-cell-group>
-            <!-- <div class="ctiy_picker">
-              <van-picker
-                v-show="show"
-                show-toolbar
-                title="选择城市"
-                :columns="columns"
-                @cancel="onCancel"
-                @confirm="onConfirm" 
-                @change="onChange" 
-              />
-            </div> -->
               <!-- 选择城市 -->
             <van-popup v-model="isSelectCity" position="bottom" :overlay="true">
               <van-picker
@@ -126,7 +117,8 @@
             <span class="attention">注：预约完成后，客服人员与您联系告知具体诊疗时间</span>
             <div class="reads">
                  <van-checkbox class="vcheckbox" v-model="checked">我已阅读并同意 </van-checkbox>
-                 <span @click="showpopup = true;">《投保须知》</span><span @click="showpopup = true;">《保险条例》</span>
+                 <!-- <span @click="showpopup = true;">《投保须知》</span><span @click="showpopup = true;">《保险条例》</span> -->
+                 <router-link to="/notice">《投保须知》</router-link><router-link to="/attens">《保险条例》</router-link>
             </div>
             <van-button class="asbtn radius1rem" @click.native="submit">确认预约</van-button>
           </div>
@@ -141,10 +133,13 @@
             </van-tabs>
           </van-popup>
           <!-- 弹出地图 -->
-          <van-popup v-model="show5" position="right" class="map_alert">
+          <!-- <van-popup v-model="show5" position="right" class="map_alert">
             <van-button @click="show5 = false" style="z-index:2;position:fixed">关闭</van-button>
-            <my-map></my-map>
-          </van-popup>
+            <div class="baidu">
+                <my-map></my-map>
+            </div>
+            
+          </van-popup> -->
         </div>
       
 
@@ -170,13 +165,16 @@ import { Dialog } from "vant";
 import attens from "../components/attens";
 import notice from "../components/notice";
 import map from "../components/Map";
-const citys = {
+let citys = {
   北京: ["朝阳", "海淀", "东城", "西城", "丰台"],
-  天津: ["福州", "厦门", "莆田", "三明", "泉州"]
+  天津: ["河西", "南开"]
 };
 export default {
   data() {
     return {
+      mapshow: false,
+      resultshow: true,
+      loading: true,
       show5: false,
       showpopup: false,
       current: 0,
@@ -196,40 +194,7 @@ export default {
       maxDate: new Date(),
       currentDate: new Date(),
       chosenCoupon: 0,
-      result: [
-        {
-          code: "M0002602C",
-          cellphone: "18611115971",
-          open_id: "",
-          start_time: 1517241600,
-          end_time: 1548777599,
-          content_id: "1001"
-        },
-        {
-          code: "M0002603C",
-          cellphone: "18611115971",
-          open_id: "",
-          start_time: "1517241600",
-          end_time: 1548777599,
-          content_id: "1001"
-        },
-        {
-          code: "M0002603C",
-          cellphone: "18611115971",
-          open_id: "",
-          start_time: "1517241600",
-          end_time: 1548777599,
-          content_id: "1001"
-        },
-        {
-          code: "M0002603C",
-          cellphone: "18611115971",
-          open_id: "",
-          start_time: "1517241600",
-          end_time: 1548777599,
-          content_id: "1001"
-        }
-      ],
+      result: [],
       coupons: [
         {
           id: "1",
@@ -263,7 +228,7 @@ export default {
           defaultIndex: 0
         }
       ],
-      sitecolumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
+      sitecolumns: [],
       timecolumns: [
         "09:00",
         "10:00",
@@ -278,13 +243,53 @@ export default {
       sCity: "",
       sSite: "",
       sDate: "",
-      sTime: ""
+      sTime: "",
+      code: "",
+      city: "", //城市
+      district: "", //地区
+      appoint_time: null, //预约时间
+      hospital: "", //医院名称
+      address: "",
+      lonandlet: ["39.9152478931", "116.4038206839"] //经纬度
     };
   },
   components: {
     attens,
     notice,
     myMap: map
+  },
+  beforeCreate() {
+    let _this = this;
+    this.$nextTick(function() {
+      axios
+        .get("apis/liren/card/codelist", {
+          params: {
+            // cellphone: window.localStorage.getItem("cellphone")
+          }
+        })
+        .then(res => {
+          this.code = res.data.result[0].code;
+          this.loading = false;
+          this.result = res.data.result;
+          // console.log(this.result);
+          if (this.result.length > 0) {
+            this.resultshow = true;
+          } else {
+            this.resultshow = false;
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+          Dialog.alert({
+            message: "网络超时，请稍后再试~"
+          }).then(() => {
+            // _this.$router.replace("/");
+          });
+          // _this.$router.push({
+          //   path: "/"
+          // });
+        });
+    });
   },
   filters: {
     formatDate(time) {
@@ -302,36 +307,27 @@ export default {
     }
   },
   created() {
-    this.getProduct();
+    // 获取城市列表
+    this.getCityinfo();
     this.setminDate();
     this.setmaxDate();
-    axios
-      .get("apis/liren/card/codelist")
-      .then(res => {
-        console.log(res.data.result);
-        this.result = res.data.result;
-        // console.log(this.result);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    // console.log(typeof new Date());
   },
   mounted() {
     this.title = this.$store.state.title;
   },
-  computed: {
-    parserDate: function(date) {
+  computed: {},
+  methods: {
+    parserDate(date) {
       var t = Date.parse(date);
       if (!isNaN(t)) {
         return new Date(Date.parse(date.replace(/-/g, "/")));
       } else {
         return new Date();
       }
-    }
-  },
-  methods: {
-    selectone(index) {
+    },
+    selectone(item, index) {
+      console.log(item.code);
+      this.code = item.code;
       // this.selectoneshow = !this.selectoneshow;
       this.current = index;
       console.log(this.current);
@@ -357,8 +353,33 @@ export default {
     Confirmcity(value, index) {
       this.isSelectCity = !this.isSelectCity;
       Toast(`当前值：${value}, 当前索引：${index}`);
-      console.log(value);
+      // console.log(value);
+      for (let i = 0; i < value.length; i++) {
+        this.city = value[0];
+        this.district = value[1];
+      }
       this.sCity = value;
+      this.sSite = "";
+      axios
+        .get("apis/liren/info/hoslist", {
+          params: {
+            city: this.city,
+            district: this.district
+          }
+        })
+        .then(res => {
+          console.log(res.data.result);
+          this.$store.commit("cityResult", res.data.result);
+          var rest = res.data.result;
+          this.sitecolumns = [];
+          this.mapshow = false;
+          for (let keys in rest) {
+            this.sitecolumns.push(rest[keys].name);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     Cancelcity() {
       this.isSelectCity = !this.isSelectCity;
@@ -371,8 +392,13 @@ export default {
     // 选择机构
     ConfirmSite(value, index) {
       this.isSelectSite = !this.isSelectSite;
-      Toast(`当前值：${value}, 当前索引：${index}`);
-      console.log(value);
+      console.log(this.$store.state.cityResult[index].coord);
+      this.address = this.$store.state.cityResult[index].address;
+      this.$store.commit(
+        "lonandlet",
+        this.$store.state.cityResult[index].coord.split(",")
+      );
+      this.mapshow = true;
       this.sSite = value;
     },
     CancelSite() {
@@ -444,8 +470,12 @@ export default {
       this.isSelectCity = !this.isSelectCity;
     },
     selectSite() {
+      if (this.sitecolumns.length < 1) {
+        Toast("请先选择城市");
+      } else {
+        this.isSelectSite = !this.isSelectSite;
+      }
       console.log("选择机构");
-      this.isSelectSite = !this.isSelectSite;
     },
     selectDate() {
       this.isSelectDate = !this.isSelectDate;
@@ -462,39 +492,70 @@ export default {
         this.$router.back(-1);
       }
     },
-    getProduct() {
-      let params = {
-        sort: "updated"
-      };
-      // axios
-      //   .get("./user", params)
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
+    getCityinfo() {
+      axios
+        .get("apis/liren/info/cityinfo")
+        .then(res => {
+          // console.log(res.data.result);
+          // console.log(citys);
+          const citys = res.data.result;
+          // console.log(citys);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     submit() {
       console.log(
-        "用户所填的数据" +
-          this.sCity +
-          this.sSite +
-          this.userIdnumber +
-          this.sDate +
-          this.sTime
+        "用户所填的数据"
+        // this.sCity +
+        // this.sSite +
+        // this.userIdnumber +
+        // this.sDate +
+        // " " +
+        // this.sTime
       );
-      this.$router.push({
-        path: "/finish"
-      });
-      // axios
-      //   .get("./user", params)
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
+      let makeDate = this.sDate + " " + this.sTime;
+      console.log(makeDate);
+      let newMakeDate = this.parserDate(makeDate);
+      console.log(newMakeDate.getTime());
+      this.appoint_time = newMakeDate.getTime();
+      if (
+        this.sCity != "" &&
+        this.sSite != "" &&
+        this.userIdnumber != "" &&
+        this.sDate != "" &&
+        this.sTime != "" &&
+        this.checked != false
+      ) {
+        if (this.userIdnumber.length != 18) {
+          Toast("请填写正确的身份证号码");
+        } else {
+          // 提交预约信息
+          axios
+            .post("apis/liren/card/appoint", {
+              code: this.code,
+              city: this.city,
+              district: this.district,
+              hospital: this.sSite,
+              address: this.address,
+              appoint_time: this.appoint_time
+            })
+            .then(res => {
+              console.log(res);
+              window.location.reload();
+              this.$router.push({
+                path: "/finish"
+              });
+            })
+            .catch(function(error) {
+              Toast("提交失败！请重试");
+              console.log(error);
+            });
+        }
+      } else {
+        Toast("请将预约信息填写完整");
+      }
     },
     logout() {
       this.$store.commit(types.LOGOUT);
@@ -595,7 +656,7 @@ export default {
   background-size: 100%;
 }
 .notice {
-  height: 6rem;
+  height: 80%;
   overflow-y: auto;
 }
 .van-coupon-item__body h2 {
@@ -607,19 +668,19 @@ export default {
   color: #666;
   margin-top: 0.2rem;
 }
-.map {
+.map_text {
   font-size: 0.2rem;
   margin: 0.1rem 0 0.3rem 0;
   overflow: hidden;
 }
-.map span {
+.map_text span {
   float: left;
   width: 80%;
   line-height: 0.25rem;
   display: inline-block;
   text-align: left;
 }
-.map a {
+.map_text a {
   display: inline-block;
   float: right;
   line-height: 0.3rem;
